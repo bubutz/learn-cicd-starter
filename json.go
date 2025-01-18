@@ -18,6 +18,12 @@ func respondWithError(w http.ResponseWriter, code int, msg string) {
 	})
 }
 
+func logerr(n int, err error) {
+    if err != nil {
+        log.Printf("Write failed: %v", err)
+    }
+}
+
 func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	w.Header().Set("Content-Type", "application/json")
 	dat, err := json.Marshal(payload)
@@ -27,5 +33,5 @@ func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 		return
 	}
 	w.WriteHeader(code)
-	w.Write(dat)
+    logerr(w.Write(dat))
 }
